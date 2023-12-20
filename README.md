@@ -1,4 +1,4 @@
-# googlelogin
+# google-login
 
 A new Flutter project.
 
