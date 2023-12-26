@@ -89,18 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Text("You are successfully logged in"),
           SizedBox(height: 10),
-          if (user != null)
-            Column(
-              children: [
-                Text("Email: ${user?.email}"),
-                if (user?.displayName != null)
-                  Text("Display Name: ${user?.displayName}")
-                else
-                  Text('User name not found')
-              ],
-            )
-          else
-            Text("User not found"),
+          user != null
+              ? Text("Email: ${user?.email ?? 'N/A'}")
+              : Text("User not found"),
         ],
       ),
     );
