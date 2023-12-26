@@ -89,9 +89,18 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Text("You are successfully logged in"),
           SizedBox(height: 10),
-          user != null
-              ? Text("Email: ${user?.email ?? 'N/A'}")
-              : Text("User not found"),
+          if (user != null)
+            Column(
+              children: [
+                Text("Email: ${user?.email}"),
+                if (user?.displayName != null)
+                  Text("Display Name: ${user?.displayName}")
+                else
+                  Text('User name not found')
+              ],
+            )
+          else
+            Text("User not found"),
         ],
       ),
     );
@@ -112,10 +121,26 @@ class _MyHomePageState extends State<MyHomePage> {
       print('Error signing in with Google: $e');
     }
   }
+  // void signin() async {
+  //   try {
+  //     final GoogleSignInAccount? googleSignInAccount =
+  //         await GoogleSignIn().signIn();
+  //     final GoogleSignInAuthentication googleSignInAuthentication =
+  //         await googleSignInAccount!.authentication;
+  //     final AuthCredential credential = GoogleAuthProvider.credential(
+  //       accessToken: googleSignInAuthentication.accessToken,
+  //       idToken: googleSignInAuthentication.idToken,
+  //     );
+  //     await auth.signInWithCredential(credential);
+  //   } catch (e) {
+  //     print('Error signing in with Google: $e');
+  //   }
+  // }
 
   void signout() async {
     if (user != null) {
       await auth.signOut();
+      await GoogleSignIn().signOut();
     }
   }
 }
